@@ -236,7 +236,7 @@ public class Library {
         Checkbox notToSayCheckbox = new Checkbox("Rather not to say", genderGroup, false);
         Label ageLabel = new Label("Age:");
         TextField ageField = new TextField();
-        Label contactLabel = new Label("Contact:");
+        Label contactLabel = new Label("Email or Phone Number:");
         TextField contactField = new TextField();
 
         // Button setup
@@ -447,6 +447,7 @@ public class Library {
         JFrame profileFrame = new JFrame("Profile");
         profileFrame.setSize(400, 400);
         profileFrame.setLayout(new BorderLayout());
+        profileFrame.getContentPane().setBackground(Color.white);
 
         // Labels setup
         String imagePath;
@@ -473,7 +474,7 @@ public class Library {
         Label nameLabel = new Label("Name: " + currentUser.name);
         Label ageLabel = new Label("Age: " + currentUser.age);
         Label genderLabel = new Label("Gender: " + currentUser.gender);
-        Label contactLabel = new Label("Contact: " + currentUser.contact);
+        Label contactLabel = new Label("Email or Phone Number: " + currentUser.contact);
         Label borrowedBooksLabel = new Label("Borrowed Books: " + currentUser.borrowedBooks.size());
 
         // Panel for other labels
@@ -504,7 +505,7 @@ public class Library {
     }
 
     private static void showGenreSelection() {
-        JFrame genreFrame = new JFrame("SUPERBOOK");
+        JFrame genreFrame = new JFrame("Borrow Books");
         genreFrame.setSize(800, 600);
         genreFrame.setLayout(new BorderLayout());
 
@@ -573,6 +574,7 @@ public class Library {
         genreFrame.add(buttonPanel, BorderLayout.SOUTH);
 
         genreFrame.setVisible(true);
+        
     }
 
 
@@ -629,6 +631,9 @@ public class Library {
         for (int i = 0; i < components.length; i++) {
             if (components[i] instanceof JCheckBox) {
                 JCheckBox checkBox = (JCheckBox) components[i];
+                
+                
+                
                 if (checkBox.isSelected()) {
                     bookSelected = true; // A book is selected
                     JLabel nameLabel = (JLabel) components[i + 1];
@@ -646,6 +651,7 @@ public class Library {
                         errorMessages.append(bookTitle).append(" cannot be borrowed anymore.\n");
                     } else if (currentUser.borrowedBooks.contains(book)) {
                         errorMessages.append("You cannot borrow the same book twice.\n");
+                        
                     }
                 }
             }
@@ -657,6 +663,7 @@ public class Library {
             JOptionPane.showMessageDialog(null, errorMessages.toString());
         } else {
             JOptionPane.showMessageDialog(null, "Books borrowed successfully.");
+            
         }
     }
 
