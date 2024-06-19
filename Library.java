@@ -20,17 +20,18 @@ public class Library {
         loginFrame.setSize(475, 700);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setLayout(null);
+        loginFrame.setLocationRelativeTo(null);
         loginFrame.getContentPane().setBackground(Color.white);
 
         // Labels setup
         String imagePath = "C:/Users/mattg/Desktop/eme eme ko sa coding/ComProg2/src/Image/logo.jpg";
-        int width = 100;
-        int height = 100;
+        int width = 200;
+        int height = 60;
 
         // Scale the image and create the label
         ImageIcon scaledIcon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
         JLabel logoLabel = new JLabel(scaledIcon);
-        logoLabel.setBounds(195, 40, width, height);
+        logoLabel.setBounds(150, 70, width, height);
         loginFrame.add(logoLabel);
         
        
@@ -97,13 +98,13 @@ public class Library {
         loginFrame.add(b1);
         
         String imagePath2 = "C:/Users/mattg/Desktop/eme eme ko sa coding/ComProg2/src/Image/logo.jpg";
-        int width2 = 100;
-        int height2 = 100;
+        int width2 = 200;
+        int height2 = 60;
 
         // Scale the image and create the label
         ImageIcon scaledIcon2 = new ImageIcon(new ImageIcon(imagePath2).getImage().getScaledInstance(width2, height2, Image.SCALE_SMOOTH));
         JLabel logoLabel2 = new JLabel(scaledIcon2);
-        logoLabel2.setBounds(190, 50, width2, height2);
+        logoLabel2.setBounds(150, 80, width2, height2);
         logoLabel2.setVisible(false);
         loginFrame.add(logoLabel2);
         
@@ -180,7 +181,7 @@ public class Library {
                 for (User user : users) {
                     if (user.username.equals(username) && user.password.equals(password)) {
                         currentUser = user;
-                        JOptionPane.showMessageDialog(null, "Login Successful!");
+                        
                         loginFrame.setVisible(false);
                         showMainMenu();
                         return;
@@ -207,15 +208,16 @@ public class Library {
         signUpFrame.setSize(475, 700);
         signUpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         signUpFrame.setLayout(null);
+        signUpFrame.setLocationRelativeTo(null);
         signUpFrame.getContentPane().setBackground(Color.white);
 
         // Logo setup
         String imagePath3 = "C:/Users/mattg/Desktop/eme eme ko sa coding/ComProg2/src/Image/logo.jpg";
-        int width3 = 100;
-        int height3 = 100;
+        int width3 = 200;
+        int height3 = 60;
         ImageIcon scaledIcon3 = new ImageIcon(new ImageIcon(imagePath3).getImage().getScaledInstance(width3, height3, Image.SCALE_SMOOTH));
         JLabel logoLabel3 = new JLabel(scaledIcon3);
-        logoLabel3.setBounds(185, 0, width3, height3);
+        logoLabel3.setBounds(140, 30, width3, height3);
         signUpFrame.add(logoLabel3);
 
         // Fields setup
@@ -359,12 +361,14 @@ public class Library {
         });
     }
 
+    
 
     private static void showMainMenu() {
         // Frame setup
         JFrame mainFrame = new JFrame("Main System");
         mainFrame.setSize(395, 390);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setLayout(new BorderLayout());
 
         // Menu setup
@@ -433,20 +437,63 @@ public class Library {
             }
         });
 
+        
+        
         logoutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 currentUser = null;
-                mainFrame.setVisible(false);
-                showLoginForm();
+                
+                Confirm();
             }
         });
     }
 
+    private static void Confirm() {
+        // Profile frame setup
+        JFrame askFrame = new JFrame("🥹");
+        askFrame.setSize(200, 100);
+        askFrame.setLocationRelativeTo(null);
+        askFrame.getContentPane().setBackground(Color.white);
+        askFrame.setVisible(true);
+        
+        JButton no = new JButton ("No");
+        JButton yes = new JButton ("Yes");
+        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(yes);
+        buttonPanel.add(no);
+        
+        Label sure = new Label("                 Are you sure?");
+        sure.setFont(new Font("Arial", Font.BOLD, 12));
+        sure.setBounds(100,10,200,20);
+        
+        
+        yes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Return to login form
+                askFrame.setVisible(false);
+                showLoginForm();
+            }
+        });
+        no.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Return to login form
+                askFrame.setVisible(false);
+                
+            }
+        });
+        
+        askFrame.add(sure, BorderLayout.CENTER);
+        askFrame.add(buttonPanel, BorderLayout.SOUTH);
+        
+    }
+    
     private static void showProfile() {
         // Profile frame setup
         JFrame profileFrame = new JFrame("Profile");
         profileFrame.setSize(400, 400);
         profileFrame.setLayout(new BorderLayout());
+        profileFrame.setLocationRelativeTo(null);
         profileFrame.getContentPane().setBackground(Color.white);
 
         // Labels setup
@@ -507,6 +554,7 @@ public class Library {
     private static void showGenreSelection() {
         JFrame genreFrame = new JFrame("Borrow Books");
         genreFrame.setSize(800, 600);
+        genreFrame.setLocationRelativeTo(null);
         genreFrame.setLayout(new BorderLayout());
 
         JLabel titleLabel = new JLabel("SUPERBOOK", JLabel.CENTER);
@@ -552,6 +600,8 @@ public class Library {
         borrowButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 borrowSelectedBooks(booksPanel);
+                genreFrame.setVisible(false);
+                showMainMenu();
             }
         });
 
@@ -593,7 +643,7 @@ public class Library {
         gbc.gridx = 2;
         booksPanel.add(new JLabel("Copies Left"), gbc);
         gbc.gridx = 3;
-        booksPanel.add(new JLabel("Image of the Book"), gbc);
+        booksPanel.add(new JLabel("Book Cover"), gbc);
 
         int row = 1;
         for (Book book : books) {
@@ -671,7 +721,8 @@ public class Library {
 
     private static void showReturnBookScreen() {
         JFrame returnFrame = new JFrame("Return Books");
-        returnFrame.setSize(600, 400);
+        returnFrame.setSize(800, 600);
+        returnFrame.setLocationRelativeTo(null);
         returnFrame.setLayout(new BorderLayout());
 
         JPanel booksPanel = new JPanel();
@@ -689,7 +740,7 @@ public class Library {
         gbc.gridx = 1;
         booksPanel.add(new JLabel("Name of the Book"), gbc);
         gbc.gridx = 2;
-        booksPanel.add(new JLabel("Image of the Book"), gbc);
+        booksPanel.add(new JLabel("Book Cover"), gbc);
 
         int row = 1;
         for (Book book : currentUser.borrowedBooks) {
@@ -759,10 +810,10 @@ public class Library {
                     currentUser.borrowedBooks.remove(book);
                 }
                 
-                // if Empty will Say and error message
+                
                 if (!booksToReturn.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Books returned successfully.");
-                } else {
+                    JOptionPane.showMessageDialog(null, "Selected books returned successfully.");
+                } else { // if Empty will Say and error message
                     JOptionPane.showMessageDialog(null, "No books selected for return.");
                 }
 
